@@ -1,0 +1,14 @@
+Package: loco
+Title: Local Correlation Tracking of Time Series (LoCo)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Adam", "Shen", , "adamshen1@gmail.com", role = c("aut", "cre"))
+Description: Implementation of the local correlation (LoCo) similarity score for time series,
+    proposed by S. Papadimitriou, J. Sun, and P. S. Yu in the paper
+    "Local Correlation Tracking in Time Series" <10.1109/ICDM.2006.99>.
+URL: https://adamoshen.github.io/loco, https://github.com/adamoshen/loco
+BugReports: https://github.com/adamoshen/loco/issues
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
