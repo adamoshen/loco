@@ -1,4 +1,4 @@
-get_ac <- function(x, window_size, decay=0.95, exp_window=TRUE) {
+get_ac <- function(x, window_size, decay, exp_window) {
   # [TODO] checks:
   # x should have length at least `window_size * 2 - 1`
 
