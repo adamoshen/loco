@@ -52,13 +52,13 @@ reduce_eigen_dimensions <- function(e, k) {
   e[, 1:k, drop=FALSE]
 }
 
-principal_evector <- function(e) {
-  e[, 1, drop=FALSE]
-}
-
 get_loco_score <- function(xvectors, yvectors) {
   0.5 * (
     norm(t(xvectors) %*% principal_evector(yvectors), type="2") +
       norm(t(yvectors) %*% principal_evector(xvectors), type="2")
   )
+}
+
+principal_evector <- function(e) {
+  e[, 1, drop=FALSE]
 }
