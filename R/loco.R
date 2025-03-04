@@ -9,12 +9,22 @@ loco <- function(
     exp_window = TRUE,
     k
 ) {
-  # [TODO] check user inputs
+  check_data_frame(.data)
+  check_symbol(x)
+  check_symbol(y)
+  check_symbol(timestamps, allow_null=TRUE)
+  check_bool(demean)
+  check_number_decimal_strict(decay, min=0, max=1)
+  check_bool(exp_window)
 
   x <- dplyr::pull(.data, {{ x }})
   y <- dplyr::pull(.data, {{ y }})
 
-  # check for missing values. exit with error?
+  check_same_length(x, y)
+  check_number_whole(window_size, min=1, max=floor(length(x) / 2))
+  check_number_whole(k, min=1, max=window_size)
+  check_complete(x)
+  check_complete(y)
 
   if (demean) {
     x <- x - mean(x)
