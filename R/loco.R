@@ -45,7 +45,6 @@ loco <- function(
   x <- dplyr::pull(.data, {{ x }})
   y <- dplyr::pull(.data, {{ y }})
 
-  check_same_length(x, y)
   check_number_whole(window_size, min=1, max=floor(length(x) / 2))
   check_number_whole(k, min=1, max=window_size)
   check_complete(x)
