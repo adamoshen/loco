@@ -1,10 +1,10 @@
 check_column_exists <- function(
-    df,
-    x,
-    allow_null = FALSE,
-    arg_df = rlang::caller_arg(df),
-    arg_x = rlang::caller_arg(x),
-    call = rlang::caller_env()
+  df,
+  x,
+  allow_null = FALSE,
+  arg_df = rlang::caller_arg(df),
+  arg_x = rlang::caller_arg(x),
+  call = rlang::caller_env()
 ) {
   x <- rlang::enquo(x)
 
