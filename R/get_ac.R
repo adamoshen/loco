@@ -1,3 +1,4 @@
+#' @noRd
 get_ac <- function(x, window_size, decay, exp_window) {
   max_timestep <- length(x) - 2 * window_size + 2
   ac <- vector("list", max_timestep)

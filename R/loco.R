@@ -1,3 +1,30 @@
+#' Calculate local correlation scores
+#'
+#' Calculate local correlation (LoCo) scores for a pair of time series.
+#'
+#' The LoCo score is an extension of the linear cross-correlation coefficient and measures the local
+#' similarity (concurrent alignment) between two time series using the spectral decompositions of
+#' local autocovariance matrices. The LoCo score is a value between 0 (weak alignment) and 1
+#' (strong alignment).
+#'
+#' @param .data A data frame or a data frame extension (e.g. a tibble).
+#' @param x,y Names of the columns containing the time series data, as symbols.
+#' @param timestamps An optional parameter specifying the name of the column, as a symbol,
+#' containing timestamps corresponding to `x` and `y`.
+#' @param demean Subtract the series' respective means from the time series values. Defaults to TRUE.
+#' @param window_size The size of the window to use when calculating autocovariances.
+#' @param decay The exponential decay factor used to downweight historic time windows when using an
+#' exponential sliding window. Should be a value strictly between 0 (most decay) and 1
+#' (least decay). Ignored if `exp_window` is FALSE.
+#' @param exp_window Should an exponential sliding window be used? Defaults to TRUE. If FALSE, a
+#' sliding (a.k.a. boxcar) window is used.
+#' @param k The number of principal eigenvectors to consider when calculating the LoCo scores.
+#' Value should be an integer between 1 and `window_size`.
+#' @return A [tibble][tibble::tibble-package] with columns `timestamps` (if supplied) and `scores`.
+#' @references Papadimitriou, S., Sun, J., and Yu, P.S. (2006) *Local Correlation Tracking in Time
+#' Series*. Proceedings of the Sixth International Conference on Data Mining (ICDM'06).
+#' [doi:10.1109/ICDM.2006.99](https://doi.org/10.1109/ICDM.2006.99).
+#' @export
 loco <- function(
     .data,
     x,
