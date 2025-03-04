@@ -64,7 +64,7 @@ loco <- function(
 
   scores <- purrr::map2_dbl(eigen_x, eigen_y, ~ get_loco_score(.x, .y))
 
-  if (rlang::quo_is_null(rlang::enquo(timestamp))) {
+  if (rlang::quo_is_null(rlang::enquo(timestamps))) {
     return(tibble::as_tibble_col(scores, "scores"))
   }
 
