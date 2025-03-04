@@ -5,6 +5,8 @@ check_number_decimal_strict <- function(
   arg = rlang::caller_arg(x),
   call = rlang::caller_env()
 ) {
+  check_number_decimal(x)
+
   if ((x > min) & (x < max)) {
     return(invisible(NULL))
   }
