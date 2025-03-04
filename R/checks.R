@@ -18,8 +18,8 @@ check_number_decimal_strict <- function(
 check_same_length <- function(
   x,
   y,
-  arg1 = rlang::caller_arg(x),
-  arg2 = rlang::caller_arg(y),
+  arg_x = rlang::caller_arg(x),
+  arg_y = rlang::caller_arg(y),
   call = rlang::caller_env()
 ) {
   if (length(x) == length(y)) {
@@ -27,12 +27,12 @@ check_same_length <- function(
   }
   cli::cli_abort(
     c(
-    "{.arg {arg1}} and {.arg {arg2}} must have the same length.",
-    "i" = "{.arg {arg1}} has length {.num {length(x)}}.",
-    "i" = "{.arg {arg2}} has length {.num {length(y)}}."
+    "{.arg {arg_x}} and {.arg {arg_y}} must have the same length.",
+    "*" = "{.arg {arg_x}} has length {.num {length(x)}}.",
+    "*" = "{.arg {arg_y}} has length {.num {length(y)}}."
     ),
-    arg1 = arg1,
-    arg2 = arg2,
+    arg_x = arg_x,
+    arg_y = arg_y,
     call = call
   )
 }
