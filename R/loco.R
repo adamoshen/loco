@@ -37,7 +37,9 @@ loco <- function(
     k
 ) {
   check_data_frame(.data)
-  # [TODO] Check column inputs
+  check_column_exists(.data, {{ x }})
+  check_column_exists(.data, {{ y }})
+  check_column_exists(.data, {{ timestamps }}, allow_null=TRUE)
   check_bool(demean)
   check_number_decimal_strict(decay, min=0, max=1)
   check_bool(exp_window)
