@@ -1,3 +1,10 @@
+#' Get local autocovariances
+#' @param x The time series data.
+#' @param window_size The window size used to calculate the local autocovariance.
+#' @param decay The exponential decay factor used for the exponential window. This value should be
+#' strictly between 0 (most decay) and 1 (least decay). Ignored if not using an exponential window.
+#' @param exp_window If TRUE, an exponential window is used to calculate local autocovariances. If
+#' FALSE, a sliding (a.k.a. boxcar) window is used.
 #' @noRd
 get_ac <- function(x, window_size, decay, exp_window) {
   max_timestep <- length(x) - 2 * window_size + 2
@@ -16,6 +23,8 @@ get_ac <- function(x, window_size, decay, exp_window) {
   ac
 }
 
+#' Get first local autocovariance using standard formula
+#' @noRd
 get_first_ac <- function(x, window_size, decay, exp_window) {
   if (exp_window) {
     first_ac <- slider::hop(
@@ -53,6 +62,10 @@ get_first_ac <- function(x, window_size, decay, exp_window) {
   purrr::reduce(first_ac, `+`)
 }
 
+#' Get subsequent local autocovariances using iterative formula
+#' @param index The index in the list that the result should occupy.
+#' @param previous_ac The local autocovariance matrix from the previous time step.
+#' @noRd
 get_next_ac <- function(x, index, previous_ac, window_size, decay, exp_window) {
   xt <- x[(window_size + index - 1):(window_size * 2 + index - 1 - 1)]
 

@@ -1,3 +1,8 @@
+#' Check that a column exists in a data frame
+#' @param df A data frame or data frame extension (e.g. tibble).
+#' @param x A column name.
+#' @param allow_null For use when a column's existence is optional.
+#' @noRd
 check_column_exists <- function(
   df,
   x,
@@ -23,6 +28,11 @@ check_column_exists <- function(
   )
 }
 
+#' Check numerical input strictly between a range
+#' @param x A value to check.
+#' @param min The minimum of the acceptable range.
+#' @param max The maximum of the acceptable range.
+#' noRd
 check_number_decimal_strict <- function(
   x,
   min,
@@ -43,6 +53,9 @@ check_number_decimal_strict <- function(
   )
 }
 
+#' Check that a vector does not contain any missing values
+#' @param x A vector of values.
+#' @noRd
 check_complete <- function(x, arg=rlang::caller_arg(x), call=rlang::caller_env()) {
   if (all(!is.na(x))) {
     return(invisible(NULL))
