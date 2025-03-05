@@ -26,15 +26,15 @@
 #' [doi:10.1109/ICDM.2006.99](https://doi.org/10.1109/ICDM.2006.99).
 #' @export
 loco <- function(
-    .data,
-    x,
-    y,
-    timestamps = NULL,
-    demean = TRUE,
-    window_size,
-    decay = 0.95,
-    exp_window = TRUE,
-    k
+  .data,
+  x,
+  y,
+  timestamps = NULL,
+  demean = TRUE,
+  window_size,
+  decay = 0.95,
+  exp_window = TRUE,
+  k
 ) {
   check_data_frame(.data)
   check_column_exists(.data, {{ x }})
