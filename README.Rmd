@@ -1,0 +1,103 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  dev = "svglite"
+)
+```
+
+# loco
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This package implements the calculation of local correlation (LoCo) similarity scores for a pair of
+time series, proposed by Papadimitriou, S., Sun, J., and Yu, P.S., in the paper
+["Local Correlation Tracking in Time Series"](https://doi.org/10.1109/ICDM.2006.99).
+
+## Installation
+
+You can install this package using:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("adamoshen/loco")
+```
+
+## Basic usage
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(loco)
+```
+
+Suppose we are interested in the local correlations of average daily temperature readings at DTW
+and LGA airports. A preview of the data:
+
+```{r}
+daily_temperature %>%
+  group_by(origin) %>%
+  slice_head(n = 6) %>%
+  group_split()
+```
+
+First, we require a data frame containing the two time series' data as columns.
+
+```{r}
+daily_temperature_wide <- daily_temperature %>%
+  pivot_wider(id_cols=date, names_from=origin, values_from=temp)
+
+daily_temperature_wide
+```
+
+We should also double-check that our two time series are aligned, i.e. that there are no missing
+values in either series. Treatment of missing values is left to the user.
+
+```{r}
+daily_temperature_wide %>%
+  summarise(
+    missing_dtw = any(is.na(DTW)),
+    missing_lga = any(is.na(LGA))
+  )
+```
+
+The LoCo scores can be obtained by passing `daily_temperature_wide` to `loco::loco()`. We set the
+window size to 5 and the number of principal eigenvectors used to 3. We can optionally supply the
+`date` column to the `timestamps` argument for ease of subsequent visualisation.
+
+```{r}
+loco_scores <- daily_temperature_wide %>%
+  loco(DTW, LGA, timestamps=date, window_size=5, k=3)
+
+loco_scores
+```
+
+We can now plot the LoCo scores and identify time points of particular interest.
+
+```{r}
+p1 <- ggplot(daily_temperature_wide) +
+  geom_line(aes(x=date, y=DTW), colour="#009E73", alpha=0.6) +
+  geom_line(aes(x=date, y=LGA), colour="#D55E00", alpha=0.6) +
+  scale_x_date(date_breaks="2 months", date_labels="%b") +
+  labs(x="", y="Average daily temperature (fahrenheit)") +
+  theme_bw()
+
+p2 <- ggplot(loco_scores) +
+  geom_line(aes(x=timestamps, y=scores), colour="black") +
+  scale_x_date(date_breaks="2 months", date_labels="%b") +
+  labs(x="", y="LoCo score") +
+  theme_bw()
+
+p1 / p2
+```
