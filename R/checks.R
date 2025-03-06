@@ -32,7 +32,7 @@ check_column_exists <- function(
 #' @param x A value to check.
 #' @param min The minimum of the acceptable range.
 #' @param max The maximum of the acceptable range.
-#' noRd
+#' @noRd
 check_number_decimal_strict <- function(
   x,
   min,
