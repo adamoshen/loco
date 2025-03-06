@@ -13,7 +13,7 @@ check_column_exists <- function(
 ) {
   x <- rlang::enquo(x)
 
-  if(rlang::quo_is_null(x) & allow_null) {
+  if (rlang::quo_is_null(x) & allow_null) {
     return(invisible(NULL))
   }
   if (rlang::as_name(x) %in% names(df)) {
