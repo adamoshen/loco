@@ -12,6 +12,7 @@ URL: https://adamoshen.github.io/loco, https://github.com/adamoshen/loco
 BugReports: https://github.com/adamoshen/loco/issues
 Imports: 
     cli,
+    dplyr,
     purrr,
     rlang (>= 1.1.0),
     slider,
@@ -22,3 +23,9 @@ RoxygenNote: 7.3.2
 Depends: 
     R (>= 3.5)
 LazyData: true
+Suggests: 
+    anyflights,
+    ggplot2,
+    lubridate,
+    patchwork,
+    tidyr
