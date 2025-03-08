@@ -30,7 +30,8 @@ library(loco)
 ```
 
 Suppose we are interested in the local correlations of average daily
-temperature readings at DTW and LGA airports. A preview of the data:
+temperature readings at JFK and LAX airports. A quick preview of the
+data:
 
 ``` r
 daily_temperature %>%
@@ -48,23 +49,23 @@ daily_temperature %>%
 #> # A tibble: 6 × 3
 #>   origin date        temp
 #>   <chr>  <date>     <dbl>
-#> 1 DTW    2013-01-01  26.4
-#> 2 DTW    2013-01-02  17.1
-#> 3 DTW    2013-01-03  21.2
-#> 4 DTW    2013-01-04  27.6
-#> 5 DTW    2013-01-05  23.3
-#> 6 DTW    2013-01-06  34.1
+#> 1 JFK    2013-01-01  38.9
+#> 2 JFK    2013-01-02  28.5
+#> 3 JFK    2013-01-03  29.8
+#> 4 JFK    2013-01-04  34.0
+#> 5 JFK    2013-01-05  36.9
+#> 6 JFK    2013-01-06  37.4
 #> 
 #> [[2]]
 #> # A tibble: 6 × 3
 #>   origin date        temp
 #>   <chr>  <date>     <dbl>
-#> 1 LGA    2013-01-01  39.4
-#> 2 LGA    2013-01-02  28.7
-#> 3 LGA    2013-01-03  29.7
-#> 4 LGA    2013-01-04  35.2
-#> 5 LGA    2013-01-05  37.8
-#> 6 LGA    2013-01-06  39.7
+#> 1 LAX    2013-01-01  51.8
+#> 2 LAX    2013-01-02  54.0
+#> 3 LAX    2013-01-03  55.0
+#> 4 LAX    2013-01-04  56.9
+#> 5 LAX    2013-01-05  52.9
+#> 6 LAX    2013-01-06  52.7
 ```
 
 First, we require a data frame containing the two time series’ data as
@@ -76,18 +77,18 @@ daily_temperature_wide <- daily_temperature %>%
 
 daily_temperature_wide
 #> # A tibble: 364 × 3
-#>    date         DTW   LGA
+#>    date         JFK   LAX
 #>    <date>     <dbl> <dbl>
-#>  1 2013-01-01  26.4  39.4
-#>  2 2013-01-02  17.1  28.7
-#>  3 2013-01-03  21.2  29.7
-#>  4 2013-01-04  27.6  35.2
-#>  5 2013-01-05  23.3  37.8
-#>  6 2013-01-06  34.1  39.7
-#>  7 2013-01-07  32.6  42.2
-#>  8 2013-01-08  29.0  41.5
-#>  9 2013-01-09  37.4  43.8
-#> 10 2013-01-10  34.3  45.8
+#>  1 2013-01-01  38.9  51.8
+#>  2 2013-01-02  28.5  54.0
+#>  3 2013-01-03  29.8  55.0
+#>  4 2013-01-04  34.0  56.9
+#>  5 2013-01-05  36.9  52.9
+#>  6 2013-01-06  37.4  52.7
+#>  7 2013-01-07  41.9  55.2
+#>  8 2013-01-08  38.7  55.3
+#>  9 2013-01-09  40.8  56.1
+#> 10 2013-01-10  45.0  55.0
 #> # ℹ 354 more rows
 ```
 
@@ -98,11 +99,11 @@ missing values is left to the user.
 ``` r
 daily_temperature_wide %>%
   summarise(
-    missing_dtw = any(is.na(DTW)),
-    missing_lga = any(is.na(LGA))
+    missing_jfk = any(is.na(JFK)),
+    missing_lax = any(is.na(LAX))
   )
 #> # A tibble: 1 × 2
-#>   missing_dtw missing_lga
+#>   missing_jfk missing_lax
 #>   <lgl>       <lgl>      
 #> 1 FALSE       FALSE
 ```
@@ -114,35 +115,36 @@ the `timestamps` argument for ease of subsequent visualisation.
 
 ``` r
 loco_scores <- daily_temperature_wide %>%
-  loco(DTW, LGA, timestamps=date, window_size=5, k=3)
+  loco(JFK, LAX, timestamps=date, window_size=10, k=3)
 
 loco_scores
-#> # A tibble: 356 × 2
+#> # A tibble: 346 × 2
 #>    timestamps scores
 #>    <date>      <dbl>
-#>  1 2013-01-05  1.00 
-#>  2 2013-01-06  1.00 
-#>  3 2013-01-07  1.00 
-#>  4 2013-01-08  1.00 
-#>  5 2013-01-09  1.00 
-#>  6 2013-01-10  0.999
-#>  7 2013-01-11  1.00 
-#>  8 2013-01-12  1.00 
-#>  9 2013-01-13  1.00 
-#> 10 2013-01-14  1.00 
-#> # ℹ 346 more rows
+#>  1 2013-01-10  0.984
+#>  2 2013-01-11  0.989
+#>  3 2013-01-12  0.991
+#>  4 2013-01-13  0.993
+#>  5 2013-01-14  0.994
+#>  6 2013-01-15  0.995
+#>  7 2013-01-16  0.995
+#>  8 2013-01-17  0.996
+#>  9 2013-01-18  0.998
+#> 10 2013-01-19  0.999
+#> # ℹ 336 more rows
 ```
 
 We can now plot the LoCo scores and identify time points of particular
 interest.
 
 ``` r
-p1 <- ggplot(daily_temperature_wide) +
-  geom_line(aes(x=date, y=DTW), colour="#009E73", alpha=0.6) +
-  geom_line(aes(x=date, y=LGA), colour="#D55E00", alpha=0.6) +
+p1 <- ggplot(daily_temperature) +
+  geom_line(aes(x=date, y=temp, colour=origin), alpha=0.6) +
+  scale_colour_manual(values = c("#009E73", "#D55E00")) +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
-  labs(x="", y="Average daily temperature (fahrenheit)") +
-  theme_bw()
+  labs(x="", y="Average daily temperature (°F)") +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 p2 <- ggplot(loco_scores) +
   geom_line(aes(x=timestamps, y=scores), colour="black") +

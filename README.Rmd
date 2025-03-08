@@ -42,8 +42,8 @@ library(patchwork)
 library(loco)
 ```
 
-Suppose we are interested in the local correlations of average daily temperature readings at DTW
-and LGA airports. A preview of the data:
+Suppose we are interested in the local correlations of average daily temperature readings at JFK
+and LAX airports. A quick preview of the data:
 
 ```{r}
 daily_temperature %>%
@@ -67,8 +67,8 @@ values in either series. Treatment of missing values is left to the user.
 ```{r}
 daily_temperature_wide %>%
   summarise(
-    missing_dtw = any(is.na(DTW)),
-    missing_lga = any(is.na(LGA))
+    missing_jfk = any(is.na(JFK)),
+    missing_lax = any(is.na(LAX))
   )
 ```
 
@@ -78,7 +78,7 @@ window size to 5 and the number of principal eigenvectors used to 3. We can opti
 
 ```{r}
 loco_scores <- daily_temperature_wide %>%
-  loco(DTW, LGA, timestamps=date, window_size=5, k=3)
+  loco(JFK, LAX, timestamps=date, window_size=10, k=3)
 
 loco_scores
 ```
@@ -86,12 +86,13 @@ loco_scores
 We can now plot the LoCo scores and identify time points of particular interest.
 
 ```{r}
-p1 <- ggplot(daily_temperature_wide) +
-  geom_line(aes(x=date, y=DTW), colour="#009E73", alpha=0.6) +
-  geom_line(aes(x=date, y=LGA), colour="#D55E00", alpha=0.6) +
+p1 <- ggplot(daily_temperature) +
+  geom_line(aes(x=date, y=temp, colour=origin), alpha=0.6) +
+  scale_colour_manual(values = c("#009E73", "#D55E00")) +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
-  labs(x="", y="Average daily temperature (fahrenheit)") +
-  theme_bw()
+  labs(x="", y="Average daily temperature (°F)") +
+  theme_bw() +
+  theme(legend.position = "bottom")
 
 p2 <- ggplot(loco_scores) +
   geom_line(aes(x=timestamps, y=scores), colour="black") +
