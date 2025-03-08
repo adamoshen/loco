@@ -10,6 +10,8 @@ Description: Implementation of the local correlation (LoCo) similarity
 License: GPL (>= 3)
 URL: https://adamoshen.github.io/loco, https://github.com/adamoshen/loco
 BugReports: https://github.com/adamoshen/loco/issues
+Depends: 
+    R (>= 3.5)
 Imports: 
     cli,
     dplyr,
@@ -17,15 +19,13 @@ Imports:
     rlang (>= 1.1.0),
     slider,
     tibble
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-Depends: 
-    R (>= 3.5)
-LazyData: true
 Suggests: 
     anyflights,
     ggplot2,
     lubridate,
     patchwork,
     tidyr
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
