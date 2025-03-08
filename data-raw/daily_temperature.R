@@ -4,7 +4,7 @@ library(tidyr)
 library(lubridate)
 library(anyflights)
 
-hourly_temperature <- get_weather(c("LGA", "DTW"), year=2013)
+hourly_temperature <- get_weather(c("LAX", "JFK"), year=2013)
 
 daily_temperature <- hourly_temperature %>%
   group_by(origin, year, month, day) %>%
