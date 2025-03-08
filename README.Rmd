@@ -85,20 +85,20 @@ loco_scores
 
 We can now plot the LoCo scores and identify time points of particular interest.
 
-```{r}
+```{r, fig.alt="Plot 1: Daily average temperatures in fahrenheit in 2013 for JFK and LAX airports. Plot 2: LoCo scores."}
 p1 <- ggplot(daily_temperature) +
   geom_line(aes(x=date, y=temp, colour=origin), alpha=0.6) +
   scale_colour_manual(values = c("#009E73", "#D55E00")) +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
-  labs(x="", y="Average daily temperature (°F)") +
-  theme_bw() +
+  labs(x="", y="Average daily temperature (°F)", colour="") +
+  theme_bw(base_size = 9) +
   theme(legend.position = "bottom")
 
 p2 <- ggplot(loco_scores) +
   geom_line(aes(x=timestamps, y=scores), colour="black") +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
   labs(x="", y="LoCo score") +
-  theme_bw()
+  theme_bw(base_size = 9)
 
 p1 / p2
 ```
