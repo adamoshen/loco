@@ -1,0 +1,17 @@
+url: https://adamoshen.github.io/loco
+template:
+  bootstrap: 5
+  bootswatch: zephyr
+  bslib:
+    primary: "#C33C43"
+    code_font: {google: "Fira Mono"}
+  theme: atom-one-light
+
+reference:
+- title: "Functions"
+  contents:
+  - loco
+
+- title: "Data sets"
+  contents:
+  - daily_temperature
