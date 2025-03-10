@@ -8,7 +8,7 @@ loco(
   .data,
   x,
   y,
-  timestamps = NULL,
+  timestamp = NULL,
   demean = TRUE,
   window_size,
   decay = 0.95,
@@ -21,7 +21,7 @@ loco(
 
 \item{x, y}{Names of the columns containing the time series data, as symbols.}
 
-\item{timestamps}{An optional parameter specifying the name of the column, as a symbol,
+\item{timestamp}{An optional parameter specifying the name of the column, as a symbol,
 containing timestamps corresponding to \code{x} and \code{y}.}
 
 \item{demean}{Subtract the series' respective means from the time series values. Defaults to TRUE.}
@@ -39,7 +39,7 @@ sliding (a.k.a. boxcar) window is used.}
 Value should be an integer between 1 and \code{window_size}.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} with columns \code{timestamps} (if supplied) and \code{scores}.
+A \link[tibble:tibble-package]{tibble} with columns \code{timestamp} (if supplied) and \code{score}.
 }
 \description{
 Calculate local correlation (LoCo) scores for a pair of time series.

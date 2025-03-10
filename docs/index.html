@@ -135,22 +135,22 @@
 <p>The LoCo scores can be obtained by passing <code>daily_temperature_wide</code> to <code><a href="reference/loco.html">loco::loco()</a></code>. We set the window size to 5 and the number of principal eigenvectors used to 3. We can optionally supply the <code>date</code> column to the <code>timestamps</code> argument for ease of subsequent visualisation.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loco_scores</span> <span class="op">&lt;-</span> <span class="va">daily_temperature_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/loco.html">loco</a></span><span class="op">(</span><span class="va">JFK</span>, <span class="va">LAX</span>, timestamps<span class="op">=</span><span class="va">date</span>, window_size<span class="op">=</span><span class="fl">10</span>, k<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="reference/loco.html">loco</a></span><span class="op">(</span><span class="va">JFK</span>, <span class="va">LAX</span>, timestamp<span class="op">=</span><span class="va">date</span>, window_size<span class="op">=</span><span class="fl">10</span>, k<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">loco_scores</span></span>
 <span><span class="co">#&gt; # A tibble: 346 × 2</span></span>
-<span><span class="co">#&gt;    timestamps scores</span></span>
-<span><span class="co">#&gt;    &lt;date&gt;      &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 2013-01-10  0.984</span></span>
-<span><span class="co">#&gt;  2 2013-01-11  0.989</span></span>
-<span><span class="co">#&gt;  3 2013-01-12  0.991</span></span>
-<span><span class="co">#&gt;  4 2013-01-13  0.993</span></span>
-<span><span class="co">#&gt;  5 2013-01-14  0.994</span></span>
-<span><span class="co">#&gt;  6 2013-01-15  0.995</span></span>
-<span><span class="co">#&gt;  7 2013-01-16  0.995</span></span>
-<span><span class="co">#&gt;  8 2013-01-17  0.996</span></span>
-<span><span class="co">#&gt;  9 2013-01-18  0.998</span></span>
-<span><span class="co">#&gt; 10 2013-01-19  0.999</span></span>
+<span><span class="co">#&gt;    timestamp  score</span></span>
+<span><span class="co">#&gt;    &lt;date&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 2013-01-10 0.984</span></span>
+<span><span class="co">#&gt;  2 2013-01-11 0.989</span></span>
+<span><span class="co">#&gt;  3 2013-01-12 0.991</span></span>
+<span><span class="co">#&gt;  4 2013-01-13 0.993</span></span>
+<span><span class="co">#&gt;  5 2013-01-14 0.994</span></span>
+<span><span class="co">#&gt;  6 2013-01-15 0.995</span></span>
+<span><span class="co">#&gt;  7 2013-01-16 0.995</span></span>
+<span><span class="co">#&gt;  8 2013-01-17 0.996</span></span>
+<span><span class="co">#&gt;  9 2013-01-18 0.998</span></span>
+<span><span class="co">#&gt; 10 2013-01-19 0.999</span></span>
 <span><span class="co">#&gt; # ℹ 336 more rows</span></span></code></pre></div>
 <p>We can now plot the LoCo scores and identify time points of particular interest.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -163,7 +163,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">loco_scores</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">timestamps</span>, y<span class="op">=</span><span class="va">scores</span><span class="op">)</span>, colour<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">timestamp</span>, y<span class="op">=</span><span class="va">score</span><span class="op">)</span>, colour<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks<span class="op">=</span><span class="st">"2 months"</span>, date_labels<span class="op">=</span><span class="st">"%b"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">""</span>, y<span class="op">=</span><span class="st">"LoCo score"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>

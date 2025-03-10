@@ -115,22 +115,22 @@ the `timestamps` argument for ease of subsequent visualisation.
 
 ``` r
 loco_scores <- daily_temperature_wide %>%
-  loco(JFK, LAX, timestamps=date, window_size=10, k=3)
+  loco(JFK, LAX, timestamp=date, window_size=10, k=3)
 
 loco_scores
 #> # A tibble: 346 × 2
-#>    timestamps scores
-#>    <date>      <dbl>
-#>  1 2013-01-10  0.984
-#>  2 2013-01-11  0.989
-#>  3 2013-01-12  0.991
-#>  4 2013-01-13  0.993
-#>  5 2013-01-14  0.994
-#>  6 2013-01-15  0.995
-#>  7 2013-01-16  0.995
-#>  8 2013-01-17  0.996
-#>  9 2013-01-18  0.998
-#> 10 2013-01-19  0.999
+#>    timestamp  score
+#>    <date>     <dbl>
+#>  1 2013-01-10 0.984
+#>  2 2013-01-11 0.989
+#>  3 2013-01-12 0.991
+#>  4 2013-01-13 0.993
+#>  5 2013-01-14 0.994
+#>  6 2013-01-15 0.995
+#>  7 2013-01-16 0.995
+#>  8 2013-01-17 0.996
+#>  9 2013-01-18 0.998
+#> 10 2013-01-19 0.999
 #> # ℹ 336 more rows
 ```
 
@@ -147,7 +147,7 @@ p1 <- ggplot(daily_temperature) +
   theme(legend.position = "bottom")
 
 p2 <- ggplot(loco_scores) +
-  geom_line(aes(x=timestamps, y=scores), colour="black") +
+  geom_line(aes(x=timestamp, y=score), colour="black") +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
   labs(x="", y="LoCo score") +
   theme_bw(base_size = 9)

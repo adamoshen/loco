@@ -78,7 +78,7 @@ window size to 5 and the number of principal eigenvectors used to 3. We can opti
 
 ```{r}
 loco_scores <- daily_temperature_wide %>%
-  loco(JFK, LAX, timestamps=date, window_size=10, k=3)
+  loco(JFK, LAX, timestamp=date, window_size=10, k=3)
 
 loco_scores
 ```
@@ -95,7 +95,7 @@ p1 <- ggplot(daily_temperature) +
   theme(legend.position = "bottom")
 
 p2 <- ggplot(loco_scores) +
-  geom_line(aes(x=timestamps, y=scores), colour="black") +
+  geom_line(aes(x=timestamp, y=score), colour="black") +
   scale_x_date(date_breaks="2 months", date_labels="%b") +
   labs(x="", y="LoCo score") +
   theme_bw(base_size = 9)

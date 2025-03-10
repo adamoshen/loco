@@ -9,7 +9,7 @@
 #'
 #' @param .data A data frame or a data frame extension (e.g. a tibble).
 #' @param x,y Names of the columns containing the time series data, as symbols.
-#' @param timestamps An optional parameter specifying the name of the column, as a symbol,
+#' @param timestamp An optional parameter specifying the name of the column, as a symbol,
 #' containing timestamps corresponding to `x` and `y`.
 #' @param demean Subtract the series' respective means from the time series values. Defaults to TRUE.
 #' @param window_size The size of the window to use when calculating autocovariances.
@@ -20,7 +20,7 @@
 #' sliding (a.k.a. boxcar) window is used.
 #' @param k The number of principal eigenvectors to consider when calculating the LoCo scores.
 #' Value should be an integer between 1 and `window_size`.
-#' @return A [tibble][tibble::tibble-package] with columns `timestamps` (if supplied) and `scores`.
+#' @return A [tibble][tibble::tibble-package] with columns `timestamp` (if supplied) and `score`.
 #' @references Papadimitriou, S., Sun, J., and Yu, P.S. (2006) *Local Correlation Tracking in Time
 #' Series*. Proceedings of the Sixth International Conference on Data Mining (ICDM'06).
 #' [doi:10.1109/ICDM.2006.99](https://doi.org/10.1109/ICDM.2006.99).
@@ -29,7 +29,7 @@ loco <- function(
   .data,
   x,
   y,
-  timestamps = NULL,
+  timestamp = NULL,
   demean = TRUE,
   window_size,
   decay = 0.95,
@@ -39,7 +39,7 @@ loco <- function(
   check_data_frame(.data)
   check_column_exists(.data, {{ x }})
   check_column_exists(.data, {{ y }})
-  check_column_exists(.data, {{ timestamps }}, allow_null=TRUE)
+  check_column_exists(.data, {{ timestamp }}, allow_null=TRUE)
   check_bool(demean)
   check_number_decimal_strict(decay, min=0, max=1)
   check_bool(exp_window)
@@ -63,18 +63,18 @@ loco <- function(
   eigen_x <- get_ac_principal_evectors(ac_x, k)
   eigen_y <- get_ac_principal_evectors(ac_y, k)
 
-  scores <- purrr::map2_dbl(eigen_x, eigen_y, ~ get_loco_score(.x, .y))
+  score <- purrr::map2_dbl(eigen_x, eigen_y, ~ get_loco_score(.x, .y))
 
-  if (rlang::quo_is_null(rlang::enquo(timestamps))) {
-    return(tibble::as_tibble_col(scores, "scores"))
+  if (rlang::quo_is_null(rlang::enquo(timestamp))) {
+    return(tibble::as_tibble_col(score, "score"))
   }
 
-  timestamps <- dplyr::pull(.data, {{ timestamps }})
-  timestamps <- timestamps[
-    -c(1:(window_size - 1), (length(timestamps) - window_size + 2):length(timestamps))
+  timestamp <- dplyr::pull(.data, {{ timestamp }})
+  timestamp <- timestamp[
+    -c(1:(window_size - 1), (length(timestamp) - window_size + 2):length(timestamp))
   ]
 
-  tibble::tibble(timestamps, scores)
+  tibble::tibble(timestamp, score)
 }
 
 get_ac_principal_evectors <- function(ac_list, k) {
