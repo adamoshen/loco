@@ -21,7 +21,7 @@
 #' @param k The number of principal eigenvectors to consider when calculating the LoCo scores.
 #' Value should be an integer between 1 and `window_size`.
 #' @return A [tibble][tibble::tibble-package] with columns `timestamp` (if supplied) and `score`.
-#' @references Papadimitriou, S., Sun, J., and Yu, P.S. (2006) *Local Correlation Tracking in Time
+#' @references Papadimitriou, S., Sun, J., and Yu, P. S. (2006) *Local Correlation Tracking in Time
 #' Series*. Proceedings of the Sixth International Conference on Data Mining (ICDM'06).
 #' [doi:10.1109/ICDM.2006.99](https://doi.org/10.1109/ICDM.2006.99).
 #' @export

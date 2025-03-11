@@ -51,7 +51,7 @@ local autocovariance matrices. The LoCo score is a value between 0 (weak alignme
 (strong alignment).
 }
 \references{
-Papadimitriou, S., Sun, J., and Yu, P.S. (2006) \emph{Local Correlation Tracking in Time
+Papadimitriou, S., Sun, J., and Yu, P. S. (2006) \emph{Local Correlation Tracking in Time
 Series}. Proceedings of the Sixth International Conference on Data Mining (ICDM'06).
 \href{https://doi.org/10.1109/ICDM.2006.99}{doi:10.1109/ICDM.2006.99}.
 }
