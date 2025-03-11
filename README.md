@@ -109,7 +109,7 @@ daily_temperature_wide %>%
 ```
 
 The LoCo scores can be obtained by passing `daily_temperature_wide` to
-`loco::loco()`. We set the window size to 5 and the number of principal
+`loco::loco()`. We set the window size to 10 and the number of principal
 eigenvectors used to 3. We can optionally supply the `date` column to
 the `timestamps` argument for ease of subsequent visualisation.
 

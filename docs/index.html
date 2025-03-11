@@ -132,7 +132,7 @@
 <span><span class="co">#&gt;   missing_jfk missing_lax</span></span>
 <span><span class="co">#&gt;   &lt;lgl&gt;       &lt;lgl&gt;      </span></span>
 <span><span class="co">#&gt; 1 FALSE       FALSE</span></span></code></pre></div>
-<p>The LoCo scores can be obtained by passing <code>daily_temperature_wide</code> to <code><a href="reference/loco.html">loco::loco()</a></code>. We set the window size to 5 and the number of principal eigenvectors used to 3. We can optionally supply the <code>date</code> column to the <code>timestamps</code> argument for ease of subsequent visualisation.</p>
+<p>The LoCo scores can be obtained by passing <code>daily_temperature_wide</code> to <code><a href="reference/loco.html">loco::loco()</a></code>. We set the window size to 10 and the number of principal eigenvectors used to 3. We can optionally supply the <code>date</code> column to the <code>timestamps</code> argument for ease of subsequent visualisation.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loco_scores</span> <span class="op">&lt;-</span> <span class="va">daily_temperature_wide</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/loco.html">loco</a></span><span class="op">(</span><span class="va">JFK</span>, <span class="va">LAX</span>, timestamp<span class="op">=</span><span class="va">date</span>, window_size<span class="op">=</span><span class="fl">10</span>, k<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
